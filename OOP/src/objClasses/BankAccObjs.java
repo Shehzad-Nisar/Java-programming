@@ -1,33 +1,10 @@
 //Bank Account class:
- class BankAccount{
-    String accId;
-    String accHolder;
-    double balance;
+package objClasses;
 
-    void deposit(double amount){
-        balance+=amount;
-
-    }
-
-    void withdraw(double amount){
-        balance-=amount;
-
-    }
-
-    // show details about acc:
-    void display(){
-        System.out.println("Account Holder : " + accHolder);
-        System.out.println("Account ID     : " + accId);
-        System.out.println("Balance        : " + balance);
-        System.out.println("-------------------------");
-    }
-
-    }
+public class BankAccObjs {
 
 
-
-
-void main() {
+static void main(String[] args) {
     BankAccount user1 = new BankAccount();
     user1.accHolder = "Baber Ali";
     user1.accId = "11222bbbb";
@@ -50,4 +27,5 @@ void main() {
 
 
 
+}
 }
