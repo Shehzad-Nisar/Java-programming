@@ -51,6 +51,11 @@ public class BankAccount {
 
     }
 
+    //saving withdrawal
+    protected void deductBalance(double amount){
+        accountBalance-=amount;
+    }
+
 
     //check balance:
     public void checkBalance(){

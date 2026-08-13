@@ -25,7 +25,7 @@ public class SavingAccount extends BankAccount{
 
 }
 
-class Main{
+class MainSaving{
     static void main() {
         SavingAccount s1 = new SavingAccount(2222,"zia khan",10000,5);
         s1.addInterest();
