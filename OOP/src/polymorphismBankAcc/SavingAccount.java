@@ -1,0 +1,28 @@
+package polymorphismBankAcc;
+
+public class SavingAccount extends BankAccount {
+
+    private double interestRate;
+
+    public SavingAccount(long accountNumber,String accountHolder, double accountBalance,double interestRate){
+
+        super(accountNumber,accountHolder,accountBalance);
+        this.interestRate = interestRate;
+
+    }
+
+    //add interest rate:
+    public void addInterest(){
+
+
+        System.out.println("Balance before interest:" + super.getAccountBalance());
+        double interest = (interestRate*super.getAccountBalance())/100;
+        super.depositBalance(interest);
+        System.out.println("Balance after interest:" + super.getAccountBalance());
+
+    }
+
+
+
+
+}
