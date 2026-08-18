@@ -3,7 +3,7 @@ package List;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Transaction {
+public class Transaction extends BankAccount{
     private String type;
     private double amount;
 
@@ -15,7 +15,8 @@ public class Transaction {
 
     public String getType(){
         return type;
-    }public double getAmount(){
+    }
+    public double getAmount(){
         return amount;
     }
 }
