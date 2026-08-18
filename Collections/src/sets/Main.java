@@ -7,7 +7,7 @@ public class Main {
 
     static void main() {
         Student s1 = new Student("Mubashir Abbasi",24);
-        Student s2 = new Student("Mubashir Abbasi",2f4);
+        Student s2 = new Student("Mubashir Abbasi",24);
 
         Set<Student> students = new HashSet<>();
         students.add(s1);
