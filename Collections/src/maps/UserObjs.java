@@ -19,8 +19,9 @@ public class UserObjs {
         sessions.put("ddf334", Zaid);
 
         User user = sessions.get("acf334");
-        System.out.println(user.name);
-        System.out.println(user.email);
+        for (Map.Entry<String , User> entry: sessions.entrySet()){
+            System.out.println("Session ID: "+ entry.getKey() + " Value : "+ entry.getValue().name);
+        }
 
     }
 
