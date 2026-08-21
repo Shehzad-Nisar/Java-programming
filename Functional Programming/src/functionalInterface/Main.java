@@ -18,5 +18,7 @@ class Main{
         operation op2 = (int a , int b)-> System.out.println("sum of a and b " + (a+b));
         op2.add(10,20);
 
+
+
     }
 }
