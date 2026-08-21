@@ -1,8 +1,10 @@
 package ibuiltFunctions;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 class User {
     private String name;
@@ -44,6 +46,16 @@ public class ConsumerFunc {
         System.out.println("DETAILS OF "+ userList.size()+ " USERS.");
         userList.forEach(detail-> System.out.println( "User: " + detail.getName()
                 + " | Gmail: " + detail.getEmail()));
+
+        List<Integer> arr = Arrays.asList(1,2,3,4,5,6,6);
+
+        arr.forEach((element)-> System.out.println(element*element));
+
+
+        Predicate<Double> isExpensive = (price) -> price>=22000;
+        System.out.println("Is this Mobile expensive: " + isExpensive.test(28000.));
+
+
 
 
 
