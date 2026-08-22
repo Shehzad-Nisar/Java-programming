@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -19,12 +20,30 @@ class Main{
 //
       int[] numbers = {11,222,34,55,65,76,24,68,35,75};
 
+        System.out.println("odd numbers using for loop");
+
+        int length = numbers.length;
+
+        List<Integer> oddNum= new ArrayList<>();
+       for(int i = 0 ; i<length; i++){
+
+           if (numbers[i] % 2 != 0) {
+               oddNum.add(numbers[i]);
+
+           }
+       }
+
+        System.out.println(oddNum);
+
 
         int[] evenNumbers = Arrays.stream(numbers)
                 .filter( n-> n % 2 == 0)
                 .toArray();
 
-        System.out.println((evenNumbers));
+        System.out.println(Arrays.toString(numbers));
+        System.out.println(Arrays.toString(evenNumbers));
+
+
 
 
 
