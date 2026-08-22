@@ -34,6 +34,10 @@ class Main{
        }
 
         System.out.println(oddNum);
+        System.out.println("odd num through stream");
+
+        List<Integer> oddStream = oddNum.stream().toList();
+        System.out.println(oddStream);
 
 
         int[] evenNumbers = Arrays.stream(numbers)
