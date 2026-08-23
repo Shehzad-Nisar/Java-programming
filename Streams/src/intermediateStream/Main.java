@@ -44,9 +44,10 @@ public class Main {
                 .filter(n-> n.price<=30)
                 .sorted(Comparator.comparing(book->book.publicationDate))
                 .map(n-> n.name.toUpperCase())
+                .limit(3)
                 .toList();
 
-       System.out.println("books cheaper then 30 dollars are :" + cheaperBooks);
+       System.out.println("These first 3 three oldest books cheaper then 30 dollars are :" + cheaperBooks);
 
 
 
