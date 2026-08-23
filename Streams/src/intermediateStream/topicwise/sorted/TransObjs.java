@@ -7,6 +7,7 @@ import java.util.List;
 public class TransObjs {
 
     static void main() {
+
         List<Transaction> transactions = Arrays.asList(
                 new Transaction("TXN001", "DEPOSIT", 5000.00),
                 new Transaction("TXN002", "WITHDRAW", 2500.00),
@@ -43,8 +44,8 @@ public class TransObjs {
         );
 
         List<Transaction> highestToLowTransAmount = transactions.stream()
-                .sorted( Comparator.comparingDouble((Transaction t) -> t.getAmount())
-                        .reversed().thenComparing())
+                        .sorted(Comparator.comparing((Transaction info) -> info.getAmount()).reversed().thenComparing((Transaction info)-> info.getTransId()))
+                        .distinct()
                         .toList();
 
 
