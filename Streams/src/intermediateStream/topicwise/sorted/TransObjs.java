@@ -43,8 +43,13 @@ public class TransObjs {
         );
 
         List<Transaction> highestToLowTransAmount = transactions.stream()
-                .sorted(Comparator.comparingDouble(Transaction::getAmount).reversed().thenComparing(Transaction::getTransId))
-                .toList();
+                .sorted( Comparator.comparingDouble((Transaction t) -> t.getAmount())
+                        .reversed().thenComparing())
+                        .toList();
+
+
+
+
         highestToLowTransAmount.forEach(System.out::println);
 
 
