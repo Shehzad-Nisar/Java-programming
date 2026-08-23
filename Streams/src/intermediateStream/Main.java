@@ -2,6 +2,7 @@ package intermediateStream;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 public class Main {
@@ -36,6 +37,14 @@ public class Main {
 
 //        System.out.println("Total books ");
 //        books.stream().forEach(book-> System.out.println("Book Name: "+ book.name +" | Publication Date: "+ book.publicationDate +" | Price: "+ book.price +" | Book Category: "+ book.category));
+
+        System.out.println("Books cheaper then $30.");
+        List<Book> cheaperBooks = books.stream()
+                .filter(n-> n.price<=30)
+                .map(n-> n.name.toUpperCase()).forEach(book-> System.out.println(book));
+
+        System.out.println(cheaperBooks);
+
 
 
     }
