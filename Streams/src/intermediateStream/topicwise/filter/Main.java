@@ -31,10 +31,11 @@ public class Main {
         );
 
         System.out.println("LIST OF ACTIVE USERS:");
-        List<User> activeUsers = users.stream()
+        List<String> activeUsers = users.stream()
                 .filter(n-> n.active)
+                .map(user-> user.name)
                 .toList();
-        activeUsers.stream().forEach(n-> System.out.println(n.name));
+        System.out.println(activeUsers);
 
 
         System.out.println("Adult Users");
