@@ -19,8 +19,11 @@ public class Streams {
 
         List<Integer> multiplied = stream2.toList();
 
+//        Stream<Integer> stream3 = num.stream();
+//        stream3.forEach(System.out::println);
+
         System.out.println("Using stream: " + multiplied);
-        
+
 
 
     }
