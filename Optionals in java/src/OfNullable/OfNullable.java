@@ -1,3 +1,5 @@
+package OfNullable;
+
 import java.util.Optional;
 
 public class OfNullable {
@@ -16,10 +18,19 @@ public class OfNullable {
 
         Optional<String> optionalS = Optional.of("kazim");
         Optional<String> optionalS2 = Optional.empty();
-        Optional<String> optionalS3 = Optional.ofNullable(null);
+        Optional<String> optionalS3 = Optional.ofNullable("mushahid hussain");
         System.out.println(optionalS);
+        System.out.println("Does optionalS contain value: " + optionalS.isPresent());
+        System.out.println("Does optionalS contain null value: " + optionalS.isEmpty());
         System.out.println(optionalS2);
+        System.out.println("Does optionalS2 contain value: " + optionalS2.isPresent());
+        System.out.println("Does optionalS2 contain null value: " + optionalS2.isEmpty());
+
         System.out.println(optionalS3);
+        System.out.println("Does optionalS3 contain value: " + optionalS3.isPresent());
+        System.out.println("Does optionalS3 contain null value: " + optionalS3.isEmpty());
+
+
 
 
         System.out.println("Calling method which may or mabe return null.");
