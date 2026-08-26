@@ -47,6 +47,19 @@ class Main{
     }
 
     private static void openAccount(Scanner scanner) {
+        System.out.println("Enter your name: ");
+        String name = scanner.nextLine().trim();
+
+        System.out.println("Enter your Email: ");
+        String email = scanner.nextLine().trim();
+
+        System.out.println("Account Type (SAVING/CURRENT): ");
+        String accountType = scanner.nextLine().trim();
+
+        System.out.println("Initial amount (optional, blank for 0): ");
+        String balanceStr = scanner.nextLine().trim();
+        Double balance = Double.valueOf(balanceStr); // convert string amount into Double amount:
+
     }
 
     private static void deposit(Scanner scanner) {

@@ -3,7 +3,7 @@ package domain;
 public class Account {
     private String accountNumber;
     private String accountType;
-    private double balance;
+    private Double balance;
     private String customerid;
 
     public Account(String accountNumber, String accountType, double balance, String customerid) {
