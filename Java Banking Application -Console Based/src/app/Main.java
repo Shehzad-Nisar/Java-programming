@@ -1,5 +1,8 @@
 package app;
 
+import service.BankService;
+import service.impl.ConsoleServiceImp;
+
 import java.util.Scanner;
 
 class Main{
@@ -7,7 +10,10 @@ class Main{
     static void main() {
         Scanner scanner = new Scanner(System.in);
         Boolean running = true;
+
+        BankService bankService = new ConsoleServiceImp();
         System.out.println("WellCome to Console Based Bank");
+
 
         while (running){
             System.out.println("""
@@ -22,15 +28,16 @@ class Main{
                 """);
             System.out.println("CHOOSE:");
             int choice = scanner.nextInt();
+             scanner.nextLine();
             System.out.println("CHOICE: " + choice);
 
             switch (choice){
-                case 1 -> openAccount(scanner);
+                case 1 -> openAccount(scanner,bankService);
                 case 2 -> deposit(scanner);
                 case 3 -> withdraw(scanner);
                 case 4 -> transfer(scanner);
                 case 5 -> accountStatement(scanner);
-                case 6 -> listOfAccounts(scanner);
+                case 6 -> listOfAccounts(scanner,bankService);
                 case 7 -> searchAccountByName(scanner);
                 case 8 -> {
                     running = false;
@@ -46,7 +53,7 @@ class Main{
 
     }
 
-    private static void openAccount(Scanner scanner) {
+    private static void openAccount(Scanner scanner, BankService bankService) {
         System.out.println("Enter your name: ");
         String name = scanner.nextLine().trim();
 
@@ -59,6 +66,8 @@ class Main{
         System.out.println("Initial amount (optional, blank for 0): ");
         String balanceStr = scanner.nextLine().trim();
         Double balance = Double.valueOf(balanceStr); // convert string amount into Double amount:
+
+        bankService.openAccount(name,email,accountType);
 
     }
 
@@ -74,7 +83,10 @@ class Main{
     private static void accountStatement(Scanner scanner) {
     }
 
-    private static void listOfAccounts(Scanner scanner) {
+    private static void listOfAccounts(Scanner scanner, BankService bankService) {
+        bankService.listOfAccounts().forEach(account-> {
+            System.out.println("Account no: " + account.getAccountNumber()+ " | "+"Account Type: " + account.getAccountType() + " | "+"Account Balance: " + account.getBalance());
+        });
     }
 
     private static void searchAccountByName(Scanner scanner) {
