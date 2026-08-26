@@ -33,7 +33,7 @@ class Main{
 
             switch (choice){
                 case 1 -> openAccount(scanner,bankService);
-                case 2 -> deposit(scanner);
+                case 2 -> deposit(scanner,bankService);
                 case 3 -> withdraw(scanner);
                 case 4 -> transfer(scanner);
                 case 5 -> accountStatement(scanner);
@@ -61,17 +61,31 @@ class Main{
         String email = scanner.nextLine().trim();
 
         System.out.println("Account Type (SAVING/CURRENT): ");
-        String accountType = scanner.nextLine().trim();
+        String accountType = scanner.nextLine().trim().toUpperCase()1
+        ;
 
         System.out.println("Initial amount (optional, blank for 0): ");
         String balanceStr = scanner.nextLine().trim();
         Double balance = Double.valueOf(balanceStr); // convert string amount into Double amount:
 
-        bankService.openAccount(name,email,accountType);
+        String accountNumber = bankService.openAccount(name,email,accountType);
+        System.out.println("Account created successfully.");
+        System.out.println("Your Account Number is :" + accountNumber);
+        System.out.println("THANKS FOR CHOOSING US !");
+
 
     }
 
-    private static void deposit(Scanner scanner) {
+    private static void deposit(Scanner scanner, BankService bankService) {
+        System.out.println("Account Number :");
+        String accountNumber = scanner.nextLine().trim();
+        System.out.println("Amount :");
+        Double amount = Double.valueOf(scanner.nextLine().trim());
+        System.out.println("Want to add a note :");
+        String note = scanner.nextLine().trim();
+
+        bankService.deposit(accountNumber,amount,note);
+
     }
 
     private static void withdraw(Scanner scanner) {

@@ -9,4 +9,7 @@ public interface BankService {
     String openAccount(String name, String email, String accountType);
 
     List<Account> listOfAccounts();
+
+    void deposit(String accountNumber, Double amount, String note);
 }
+

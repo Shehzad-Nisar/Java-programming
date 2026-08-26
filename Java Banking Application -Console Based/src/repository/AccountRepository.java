@@ -1,6 +1,7 @@
 package repository;
 
 import domain.Account;
+import domain.Transaction;
 
 import java.util.*;
 
@@ -14,6 +15,13 @@ public class AccountRepository {
 
     public List<Account> findAll() {
         return new ArrayList<>(accountsByNumbers.values());
-
     }
+
+
+    public Optional<Account> findAccByNumber(String accNumber) {
+        return Optional.ofNullable(accountsByNumbers.get(accNumber));
+    }
+
+
+
 }
