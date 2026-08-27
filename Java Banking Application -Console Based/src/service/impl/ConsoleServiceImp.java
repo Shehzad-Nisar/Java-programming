@@ -57,12 +57,10 @@ public class ConsoleServiceImp implements BankService {
                 .orElseThrow(()-> new RuntimeException("Account not found!"));
         account.setBalance(account.getBalance() + amount);
 
-        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_IN, LocalDateTime.now(),note,amount);
+        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.DEPOSIT, LocalDateTime.now(),note,amount);
 
         transactionRepository.add(transaction);
     }
-
-
 
 
     // withdraw method:
@@ -79,37 +77,51 @@ public class ConsoleServiceImp implements BankService {
         System.out.println("Withdraw " +amount + " rupees against Account number : " +accountNumber + " successfully." );
 
 
-        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_OUT, LocalDateTime.now(),"Deducted",amount);
+        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.WITHDRAW, LocalDateTime.now(),"Deducted",amount);
         transactionRepository.add(transaction);
     }
 
     // method to transfer balance from one account to others.
     @Override
     public void transfer(String fromAccNum, String toAccNum, Double amount) {
+
+        // validation 1 : to check both should not be same:
+        if(fromAccNum.equals(toAccNum))
+            throw new RuntimeException("Cannot Transfer to your own account.");
+
+        // Fetching account objects and also validate them.
         Account sender = accountRepository.findAccByNumber(fromAccNum)
-                .orElseThrow(()-> new RuntimeException("Sender Acc Not found!"));
+                .orElseThrow(()-> new RuntimeException("Sender Acc Not found! " +fromAccNum));
 
         Account receiver = accountRepository.findAccByNumber(toAccNum)
-                .orElseThrow(()-> new RuntimeException("Sender Acc Not found!"));
+                .orElseThrow(()-> new RuntimeException("Sender Acc Not found! " + toAccNum));
 
+        // validation 2 : to check sender should have that much balance:
         if(sender.getBalance().compareTo(amount)<0){
             throw new RuntimeException("Insufficient Balance.");
         }
 
-        deposit(toAccNum,amount,"deposited");
-        withdraw(fromAccNum,amount);
+        // deduct amount from sender's balance.
+        sender.setBalance(sender.getBalance() - amount);
 
-        System.out.println("Transferred amount: " + amount + " | From account: " + fromAccNum + " | To Account: " + toAccNum);
+        // add amount to receiver's account.
+        receiver.setBalance(receiver.getBalance() + amount);
 
+        // add transaction against sender's account.
+        transactionRepository.add(new Transaction(UUID.randomUUID().toString(),sender.getAccountNumber(), Type.TRANSFER_OUT, LocalDateTime.now(),"Transferred amount.",amount));
 
-
-
-
+        // add transaction against receiver's account.
+        transactionRepository.add(new Transaction(UUID.randomUUID().toString(),receiver.getAccountNumber(), Type.TRANSFER_IN, LocalDateTime.now(),"Get amount.",amount));
 
     }
 
-
-
+    @Override
+    public List<Transaction> accountStatements(String account) {
+        return transactionRepository.findByAccount(account)
+                .stream()
+                .sorted(Comparator.comparing( Transaction::getTimestamp))
+                .toList();
+    }
 
 
 }
