@@ -16,6 +16,9 @@ import java.util.UUID;
 public class ConsoleServiceImp implements BankService {
     AccountRepository accountRepository = new AccountRepository();
     TransactionRepository transactionRepository = new TransactionRepository();
+
+
+
     @Override
     public String openAccount(String name, String email, String accountType) {
 
@@ -24,7 +27,7 @@ public class ConsoleServiceImp implements BankService {
         // change later -> 10+1 -> ACC11---
         String accountNumber = getAccountNumber();
 
-        Account account = new Account(accountNumber,accountType,100000.2,customerid);
+        Account account = new Account(accountNumber,accountType,0,customerid);
 
         //save to repository in account repository
         accountRepository.save(account);
@@ -51,13 +54,16 @@ public class ConsoleServiceImp implements BankService {
         Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_IN, LocalDateTime.now(),note,amount);
 
         transactionRepository.add(transaction);
+    }
+    @Override
+    public void withdraw(String accountNumber, Double amount, String note) {
+        Account account = accountRepository.findAccByNumber(accountNumber)
+                .orElseThrow(()-> new RuntimeException("Account Not Found!"));
 
+        account.setBalance(account.getBalance() - amount);
 
-
-
-
-
-
+        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_OUT, LocalDateTime.now(),note,amount);
+        transactionRepository.add(transaction);
 
 
     }
