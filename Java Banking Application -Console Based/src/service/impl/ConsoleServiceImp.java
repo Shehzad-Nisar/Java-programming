@@ -56,13 +56,13 @@ public class ConsoleServiceImp implements BankService {
         transactionRepository.add(transaction);
     }
     @Override
-    public void withdraw(String accountNumber, Double amount, String note) {
+    public void withdraw(String accountNumber, Double amount) {
         Account account = accountRepository.findAccByNumber(accountNumber)
                 .orElseThrow(()-> new RuntimeException("Account Not Found!"));
 
         account.setBalance(account.getBalance() - amount);
 
-        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_OUT, LocalDateTime.now(),note,amount);
+        Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_OUT, LocalDateTime.now(),"Deducted",amount);
         transactionRepository.add(transaction);
 
 

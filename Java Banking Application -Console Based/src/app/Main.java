@@ -96,9 +96,9 @@ class Main{
         String accountNumber = scanner.nextLine().trim();
         System.out.println("Amount :");
         Double amount = Double.valueOf(scanner.nextLine().trim());
-        System.out.println("Want to add a note :");
-        String note = scanner.nextLine().trim();
-        bankService.withdraw(accountNumber,amount,note);
+        bankService.withdraw(accountNumber,amount);
+        System.out.println("Withdraw " +amount + " rupees against Account number : " +accountNumber + " successfully." );
+
 
 
     }
