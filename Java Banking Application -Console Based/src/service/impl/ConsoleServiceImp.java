@@ -6,10 +6,12 @@ import domain.Transaction;
 import domain.Type;
 import exceptions.AccountNotFoundException;
 import exceptions.InsufficientAmountException;
+import exceptions.ValidationException;
 import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
 import repository.AccountRepository;
+import util.Validation;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,9 +22,26 @@ public class ConsoleServiceImp implements BankService {
     CustomerRepository customerRepository = new CustomerRepository();
 
 
+    // validations:
+    private Validation<String> nameValidation = name ->{
+        if(name == null|| name.isBlank()) throw new ValidationException("Proper name is required.");
+
+    };
+
+    private Validation<String> emailValidation = email ->{
+        if(email == null|| !email.contains("@gmail.com")) throw new ValidationException("Proper email with @gmail.com in the end is required.");
+
+    };
+
+    private Validation<String> typeValidation = type ->{
+        if(type!=) throw new ValidationException("Proper email with @gmail.com in the end is required.");
+
+    };
 
     @Override
     public String openAccount(String name, String email, String accountType) {
+        nameValidation.validation(name);
+        emailValidation.validation(email);
 
         String customerid = UUID.randomUUID().toString();
 
@@ -92,7 +111,7 @@ public class ConsoleServiceImp implements BankService {
 
         // validation 1 : to check both should not be same:
         if(fromAccNum.equals(toAccNum))
-            throw new RuntimeException("Cannot Transfer to your own account.");
+            throw new ValidationException("Cannot Transfer to your own account.");
 
         // Fetching account objects and also validate them.
         Account sender = accountRepository.findAccByNumber(fromAccNum)
