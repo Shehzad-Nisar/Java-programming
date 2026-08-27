@@ -34,7 +34,11 @@ public class ConsoleServiceImp implements BankService {
     };
 
     private Validation<String> typeValidation = type ->{
-        if(type!=) throw new ValidationException("Proper email with @gmail.com in the end is required.");
+        if(type==null || !(type.equalsIgnoreCase("SAVING")||type.equalsIgnoreCase("CURRENT"))) throw new ValidationException("Only two types are required (SAVINGS || CURRENT).");
+
+    };
+    private Validation<Double> validateAmount = amount ->{
+        if(amount==null || amount<=0) throw new ValidationException("Please Enter a Valid amount.");
 
     };
 
@@ -42,6 +46,7 @@ public class ConsoleServiceImp implements BankService {
     public String openAccount(String name, String email, String accountType) {
         nameValidation.validation(name);
         emailValidation.validation(email);
+        typeValidation.validation(accountType);
 
         String customerid = UUID.randomUUID().toString();
 
@@ -77,6 +82,7 @@ public class ConsoleServiceImp implements BankService {
     //deposit method
     @Override
     public void deposit(String accountNumber, Double amount, String note) {
+        validateAmount.validation(amount);
         Account account = accountRepository.findAccByNumber(accountNumber)
                 .orElseThrow(()-> new AccountNotFoundException("Account not found!" + accountNumber));
         account.setBalance(account.getBalance() + amount);
@@ -90,6 +96,7 @@ public class ConsoleServiceImp implements BankService {
     // withdraw method:
     @Override
     public void withdraw(String accountNumber, Double amount) {
+        validateAmount.validation(amount);
         Account account = accountRepository.findAccByNumber(accountNumber)
                 .orElseThrow(()-> new AccountNotFoundException("Account Not Found!"+ accountNumber));
 
@@ -108,6 +115,8 @@ public class ConsoleServiceImp implements BankService {
     // method to transfer balance from one account to others.
     @Override
     public void transfer(String fromAccNum, String toAccNum, Double amount) {
+
+        validateAmount.validation(amount);
 
         // validation 1 : to check both should not be same:
         if(fromAccNum.equals(toAccNum))
