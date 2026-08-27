@@ -13,6 +13,9 @@ public interface BankService {
     List<Account> listOfAccounts();
 
     void deposit(String accountNumber, Double amount, String note);
+
+    void transfer(String fromAccNum, String toAccNum, Double amount);
 }
+
 
 

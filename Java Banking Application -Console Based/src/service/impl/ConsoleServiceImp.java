@@ -35,6 +35,12 @@ public class ConsoleServiceImp implements BankService {
         return accountNumber;
     }
 
+    private String getAccountNumber() {
+        int size = accountRepository.findAll().size() + 1;
+
+        return String.format("AC%06d" ,size);
+    }
+
 
     // this method shows list of accounts
     @Override
@@ -55,23 +61,55 @@ public class ConsoleServiceImp implements BankService {
 
         transactionRepository.add(transaction);
     }
+
+
+
+
+    // withdraw method:
     @Override
     public void withdraw(String accountNumber, Double amount) {
         Account account = accountRepository.findAccByNumber(accountNumber)
                 .orElseThrow(()-> new RuntimeException("Account Not Found!"));
 
+        if(account.getBalance().compareTo(amount)<0){
+            throw new RuntimeException("Insufficient balance.");
+        }
+
         account.setBalance(account.getBalance() - amount);
+        System.out.println("Withdraw " +amount + " rupees against Account number : " +accountNumber + " successfully." );
+
 
         Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.TRANSFER_OUT, LocalDateTime.now(),"Deducted",amount);
         transactionRepository.add(transaction);
+    }
+
+    // method to transfer balance from one account to others.
+    @Override
+    public void transfer(String fromAccNum, String toAccNum, Double amount) {
+        Account sender = accountRepository.findAccByNumber(fromAccNum)
+                .orElseThrow(()-> new RuntimeException("Sender Acc Not found!"));
+
+        Account receiver = accountRepository.findAccByNumber(toAccNum)
+                .orElseThrow(()-> new RuntimeException("Sender Acc Not found!"));
+
+        if(sender.getBalance().compareTo(amount)<0){
+            throw new RuntimeException("Insufficient Balance.");
+        }
+
+        deposit(toAccNum,amount,"deposited");
+        withdraw(fromAccNum,amount);
+
+        System.out.println("Transferred amount: " + amount + " | From account: " + fromAccNum + " | To Account: " + toAccNum);
+
+
+
+
 
 
     }
 
-    private String getAccountNumber() {
-        int size = accountRepository.findAll().size() + 1;
 
-        return String.format("AC%06d" ,size);
-    }
+
+
 
 }
