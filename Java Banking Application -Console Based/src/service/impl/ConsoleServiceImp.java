@@ -1,21 +1,21 @@
 package service.impl;
 
 import domain.Account;
+import domain.Customer;
 import domain.Transaction;
 import domain.Type;
+import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
 import repository.AccountRepository;
 
 import java.time.LocalDateTime;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class ConsoleServiceImp implements BankService {
     AccountRepository accountRepository = new AccountRepository();
     TransactionRepository transactionRepository = new TransactionRepository();
+    CustomerRepository customerRepository = new CustomerRepository();
 
 
 
@@ -23,6 +23,9 @@ public class ConsoleServiceImp implements BankService {
     public String openAccount(String name, String email, String accountType) {
 
         String customerid = UUID.randomUUID().toString();
+
+        Customer c = new Customer(name,customerid,email);
+        customerRepository.saved(c);
 
         // change later -> 10+1 -> ACC11---
         String accountNumber = getAccountNumber();
@@ -94,7 +97,7 @@ public class ConsoleServiceImp implements BankService {
                 .orElseThrow(()-> new RuntimeException("Sender Acc Not found! " +fromAccNum));
 
         Account receiver = accountRepository.findAccByNumber(toAccNum)
-                .orElseThrow(()-> new RuntimeException("Sender Acc Not found! " + toAccNum));
+                .orElseThrow(()-> new RuntimeException("Receiver Acc Not found! " + toAccNum));
 
         // validation 2 : to check sender should have that much balance:
         if(sender.getBalance().compareTo(amount)<0){
@@ -120,6 +123,29 @@ public class ConsoleServiceImp implements BankService {
         return transactionRepository.findByAccount(account)
                 .stream()
                 .sorted(Comparator.comparing( Transaction::getTimestamp))
+                .toList();
+    }
+
+    @Override
+    public List<Account> searchByName(String name) {
+
+//        List<Account> result = new ArrayList<>();
+//        for(Customer customer : customerRepository.findAll()){
+//            if(customer.getName().toLowerCase().contains(query)){
+//                result.addAll(accountRepository.findByCustId(customer.getId()));
+//
+//            }
+//
+//        }
+//        result.sort(Comparator.comparing(Account::getAccountNumber));
+
+
+        String query = (name == null)?" ": name.toLowerCase();
+
+        return customerRepository.findAll().stream()
+                .filter(c-> c.getName().toLowerCase().equals(query))
+                .flatMap(c-> accountRepository.findByCustId(c.getId()).stream())
+                .sorted(Comparator.comparing(Account::getAccountNumber))
                 .toList();
     }
 

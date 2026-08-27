@@ -38,7 +38,7 @@ class Main{
                 case 4 -> transfer(scanner,bankService);
                 case 5 -> accountStatement(scanner,bankService);
                 case 6 -> listOfAccounts(scanner,bankService);
-                case 7 -> searchAccountByName(scanner);
+                case 7 -> searchAccountByName(scanner,bankService);
                 case 8 -> {
                     running = false;
                     System.out.println("Thank you");
@@ -125,7 +125,12 @@ class Main{
         });
     }
 
-    private static void searchAccountByName(Scanner scanner) {
+    private static void searchAccountByName(Scanner scanner,BankService bankService) {
+        System.out.println("Enter Account name :");
+        String name = scanner.nextLine().trim();
+        bankService.searchByName(name).forEach(acc-> {
+            System.out.println(acc.getAccountNumber() + " | " + acc.getAccountType() + " | " + acc.getBalance() );
+        });
     }
 
 }

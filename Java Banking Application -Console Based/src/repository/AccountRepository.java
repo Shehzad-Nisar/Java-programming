@@ -24,4 +24,15 @@ public class AccountRepository {
 
 
 
+    public List<Account> findByCustId(String customerId) {
+
+        //create an account list to store same data;
+        List<Account> result = new ArrayList<>();
+        for (Account c : accountsByNumbers.values()){
+            if(c.getCustomerid().equals(customerId)){
+                result.add(c);
+            }
+        }
+        return result;
+    }
 }
