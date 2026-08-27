@@ -61,14 +61,16 @@ class Main{
         String email = scanner.nextLine().trim();
 
         System.out.println("Account Type (SAVING/CURRENT): ");
-        String accountType = scanner.nextLine().trim().toUpperCase()1
-        ;
+        String accountType = scanner.nextLine().trim().toUpperCase();
 
         System.out.println("Initial amount (optional, blank for 0): ");
         String balanceStr = scanner.nextLine().trim();
         Double balance = Double.valueOf(balanceStr); // convert string amount into Double amount:
 
         String accountNumber = bankService.openAccount(name,email,accountType);
+        if(balance>0){
+            bankService.deposit(accountNumber,balance,"Initial deposit.");
+        }
         System.out.println("Account created successfully.");
         System.out.println("Your Account Number is :" + accountNumber);
         System.out.println("THANKS FOR CHOOSING US !");
