@@ -4,6 +4,8 @@ import domain.Account;
 import domain.Customer;
 import domain.Transaction;
 import domain.Type;
+import exceptions.AccountNotFoundException;
+import exceptions.InsufficientAmountException;
 import repository.CustomerRepository;
 import repository.TransactionRepository;
 import service.BankService;
@@ -57,7 +59,7 @@ public class ConsoleServiceImp implements BankService {
     @Override
     public void deposit(String accountNumber, Double amount, String note) {
         Account account = accountRepository.findAccByNumber(accountNumber)
-                .orElseThrow(()-> new RuntimeException("Account not found!"));
+                .orElseThrow(()-> new AccountNotFoundException("Account not found!" + accountNumber));
         account.setBalance(account.getBalance() + amount);
 
         Transaction transaction = new Transaction(UUID.randomUUID().toString(),accountNumber, Type.DEPOSIT, LocalDateTime.now(),note,amount);
@@ -70,10 +72,10 @@ public class ConsoleServiceImp implements BankService {
     @Override
     public void withdraw(String accountNumber, Double amount) {
         Account account = accountRepository.findAccByNumber(accountNumber)
-                .orElseThrow(()-> new RuntimeException("Account Not Found!"));
+                .orElseThrow(()-> new AccountNotFoundException("Account Not Found!"+ accountNumber));
 
         if(account.getBalance().compareTo(amount)<0){
-            throw new RuntimeException("Insufficient balance.");
+            throw new InsufficientAmountException("Insufficient balance.");
         }
 
         account.setBalance(account.getBalance() - amount);
@@ -94,14 +96,14 @@ public class ConsoleServiceImp implements BankService {
 
         // Fetching account objects and also validate them.
         Account sender = accountRepository.findAccByNumber(fromAccNum)
-                .orElseThrow(()-> new RuntimeException("Sender Acc Not found! " +fromAccNum));
+                .orElseThrow(()-> new AccountNotFoundException("Sender Acc Not found! " +fromAccNum));
 
         Account receiver = accountRepository.findAccByNumber(toAccNum)
-                .orElseThrow(()-> new RuntimeException("Receiver Acc Not found! " + toAccNum));
+                .orElseThrow(()-> new AccountNotFoundException("Receiver Acc Not found! " + toAccNum));
 
         // validation 2 : to check sender should have that much balance:
         if(sender.getBalance().compareTo(amount)<0){
-            throw new RuntimeException("Insufficient Balance.");
+            throw new InsufficientAmountException("Insufficient Balance.");
         }
 
         // deduct amount from sender's balance.
