@@ -1,5 +1,5 @@
 package loose;
 
-public interface Payment {
+public interface PaymentMethod {
     public void makePayment(double amount);
 }
