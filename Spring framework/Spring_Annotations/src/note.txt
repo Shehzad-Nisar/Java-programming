@@ -2,3 +2,21 @@
  - component, configuration , componentScann();
  - autowired , primary and qualifiers.
 - bean life Cycle imp.
+
+       Spring starts
+           ↓
+       finds @Component BeanLifeCycle
+           ↓
+       creates NotificationService
+           ↓
+       creates BeanLifeCycle(NotificationService)
+           ↓
+       @PostConstruct
+           ↓
+       Bean ready
+           ↓
+       you get bean from Main
+           ↓
+       Spring context closes
+           ↓
+       @PreDestroy
