@@ -1,0 +1,3 @@
+- annotations
+ - component, configuration , componentScann();
+ - autowired , primary and qualifiers.
