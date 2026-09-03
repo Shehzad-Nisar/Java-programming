@@ -1,3 +1,4 @@
 - annotations
  - component, configuration , componentScann();
  - autowired , primary and qualifiers.
+- bean life Cycle imp.
