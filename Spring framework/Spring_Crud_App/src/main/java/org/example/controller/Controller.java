@@ -1,13 +1,12 @@
 package org.example.controller;
 
 import org.example.service.UserService;
-import org.springframework.stereotype.Service;
 import java.util.List;
-@Service
 
 
 public class Controller {
     private UserService userService;
+
 
     public Controller(UserService userService) {
         this.userService = userService;
@@ -15,6 +14,7 @@ public class Controller {
 
     public void createUser(String name){
         userService.addUser( name);
+        System.out.println("created user as :" + name);
     }
 
     public void allUser(){

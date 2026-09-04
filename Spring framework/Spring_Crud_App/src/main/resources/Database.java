@@ -2,6 +2,7 @@ package org.example.db;
 
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -10,6 +11,7 @@ public class Database {
     private  List<String> User;
 
     public void init(){
+        User = new ArrayList<>();
         System.out.println("db connection is established.");
     }
 
@@ -20,6 +22,7 @@ public class Database {
     public void addUser(String user){
         User.add(user);
     }
+
 
     public void destroy(){
         System.out.println("db connection is closed.");

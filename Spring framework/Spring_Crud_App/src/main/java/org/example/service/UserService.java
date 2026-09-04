@@ -1,9 +1,11 @@
 package org.example.service;
 
 import org.example.repository.Repository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class UserService {
     private Repository repository;
 
