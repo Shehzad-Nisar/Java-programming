@@ -2,13 +2,19 @@ package org.example.controller;
 
 import org.example.service.UserService;
 import java.util.List;
+import org.example.service.UserService;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
+import java.util.List;
+
+@Controller
 
 
-public class Controller {
+public class UserController{
     private UserService userService;
 
 
-    public Controller(UserService userService) {
+    public UserController(UserService userService) {
         this.userService = userService;
     }
 

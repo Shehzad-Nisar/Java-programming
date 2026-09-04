@@ -8,6 +8,10 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "org.example")
 public class AppConfig {
+    @Bean(initMethod = "init" , destroyMethod = "destroy")
+    public Database database(){
+        return new Database();
+    }
 
 
 

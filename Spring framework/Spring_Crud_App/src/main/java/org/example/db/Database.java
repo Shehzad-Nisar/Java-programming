@@ -10,6 +10,7 @@ public class Database {
 
     private  List<String> User;
 
+
     public void init(){
         User = new ArrayList<>();
         System.out.println("db connection is established.");
