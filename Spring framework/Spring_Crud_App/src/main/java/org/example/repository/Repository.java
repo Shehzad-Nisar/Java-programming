@@ -3,6 +3,7 @@ package org.example.repository;
 import org.example.db.Database;
 
 import java.util.List;
+@org.springframework.stereotype.Repository
 
 public class Repository {
     private Database db;
